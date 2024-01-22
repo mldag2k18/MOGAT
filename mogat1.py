@@ -3,8 +3,9 @@ addRawFeat = True
 base_path = ''
 feature_networks_integration = [ 'exp','coe','cli','met','mut','cna', 'lnc', 'mir']
 #feature_networks_integration = [ 'exp']
+#feature_networks_integration = [ 'exp']
 node_networks = [ 'exp','coe','cli','met','mut','cna', 'lnc', 'mir']
-# node_networks = [ 'mir']
+#node_networks = ['exp']
 int_method = 'MLP' # 'MLP' or 'XGBoost' or 'RF' or 'SVM'
 xtimes = 50 
 xtimes2 = 10 
@@ -24,8 +25,8 @@ learning_rates = [0.01, 0.001, 0.0001]
 hid_sizes = [512] 
 random_state = 404
 
-# SUPREME run
-print('SUPREME is setting up!')
+# MOGAT run
+print('MOGAT is setting up!')
 from lib import module2, function
 import time
 import os, pyreadr, itertools
@@ -60,10 +61,10 @@ if ((True in feature_selection_per_network) or (optional_feat_selection == True)
     import re
 
 # Parser
-parser = argparse.ArgumentParser(description='''An integrative node classification framework, called SUPREME 
-(a subtype prediction methodology), that utilizes graph convolutions on multiple datatype-specific networks that are annotated with multiomics datasets as node features. 
+parser = argparse.ArgumentParser(description='''An integrative node classification framework, called MOGAT 
+(a cancer subtype prediction methodology), that utilizes graph attentions on multiple datatype-specific networks that are annotated with multiomics datasets as node features. 
 This framework is model-agnostic and could be applied to any classification problem with properly processed datatypes and networks.
-In our work, SUPREME was applied specifically to the breast cancer subtype prediction problem by applying convolution on patient similarity networks
+In our work, MOGAT was applied specifically to the breast cancer subtype prediction problem by applying attentions on patient similarity networks
 constructed based on multiple biological datasets from breast tumor samples.''')
 parser.add_argument('-data', "--data_location", nargs = 1, default = ['sample_data'])
 
@@ -110,9 +111,9 @@ def validate():
 criterion = torch.nn.CrossEntropyLoss()
 
 data_path_node =  base_path + 'data/' + dataset_name +'/'
-run_name = 'SUPREME_'+  dataset_name + '_results_1'
+run_name = 'MOGAT_'+  dataset_name + '_results_1'
 save_path = base_path + run_name + '/'
-excel_file = save_path + "SUPREME_results.xlsx"
+excel_file = save_path + "MOGAT_results.xlsx"
 
 if not os.path.exists(base_path + run_name):
     os.makedirs(base_path + run_name + '/')
@@ -133,7 +134,7 @@ start = time.time()
 
 is_first = 0
 
-print('SUPREME is running..')
+print('MOGAT is running..')
             
 for netw in node_networks:
     file = base_path + 'data/' + dataset_name +'/'+ netw +'.pkl'
@@ -218,7 +219,7 @@ for n in range(len(node_networks)):
                 in_size = data.x.shape[1]
                 out_size = torch.unique(data.y).shape[0]
 
-                print("GCN trained for hyperparameter: learning rate", learning_rate, "hidden layer size", hid_size)
+                print("GAT trained for hyperparameter: learning rate", learning_rate, "hidden layer size", hid_size)
                 model = module2.Net(in_size=in_size, hid_size=hid_size, out_size=out_size)
                 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
@@ -262,8 +263,8 @@ for n in range(len(node_networks)):
     in_size = data.x.shape[1]
     out_size = torch.unique(data.y).shape[0]
     
-    # initializing GCN
-    print("GCN training Started 2")
+    # initializing GAT
+    print("GAT training Started 2")
     model = module2.Net(in_size=in_size, hid_size=best_emb_hs, out_size=out_size)
     optimizer = torch.optim.Adam(model.parameters(), lr=best_emb_lr)
 
@@ -290,7 +291,7 @@ for n in range(len(node_networks)):
     with open(emb_file, 'wb') as f:
         pickle.dump(selected_emb, f)
         pd.DataFrame(selected_emb).to_csv(emb_file[:-4] + '.csv')
-    print("GCN training done for", data_path_node + 'edges_' + netw_base + '.pkl')
+    print("GAT training done for", data_path_node + 'edges_' + netw_base + '.pkl')
     
 '''     
 addFeatures = []
@@ -487,5 +488,5 @@ for trials in range(len(trial_combs)):
 '''
 end = time.time()
 print('It took ' + str(round(end - start, 1)) + ' seconds for all runs.')
-print('SUPREME is done.')
+print('MOGAT is done.')
 print('Results are available at ' + excel_file)
