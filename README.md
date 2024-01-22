@@ -23,3 +23,4 @@ The salient features of this study are enumerated below.
 
 <img width="553" alt="image" src="https://github.com/mldag2k18/MOGAT/assets/157138926/5d6f67c9-55c8-4358-ac93-bd9b4a13415c">
 
+Figure 1. Illustration of MOGAT framework. 
