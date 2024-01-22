@@ -1,6 +1,7 @@
 # MOGAT: A Multi-Omics Integration Framework Using Graph Attention Networks for Cancer Subtype Prediction
 
 Raihanul Bari Tanvir, Md Mezbahul Islam, Masrur Sobhan, Dongsheng Luo * and Ananda M. Mondal *
+
 Knight Foundation School of Computing and Information Sciences, Florida International University, Miami, FL 33199, USA; rtanv003@fiu.edu (R.B.T); misla009@fiu.edu (M.M.I); mosbh002@fiu.edu (M.S.)
 *	Correspondence: dluo@fiu.edu (D.L.); amondal@fiu.edu (A.M.M.)
 
