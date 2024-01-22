@@ -4,7 +4,7 @@ base_path = ''
 feature_networks_integration = [ 'exp','coe','cli','met','mut','cna','lnc', 'mir']
 #feature_networks_integration = [ 'exp']
 node_networks = [ 'exp','coe','cli','met','mut','cna', 'lnc', 'mir']
-#node_networks = [ 'lnc']
+#node_networks = [ 'exp']
 int_method = 'MLP' # 'MLP' or 'XGBoost' or 'RF' or 'SVM'
 xtimes = 50 
 xtimes2 = 10 
@@ -24,8 +24,8 @@ learning_rates = [0.01, 0.001, 0.0001]
 hid_sizes = [512] 
 random_state = 404
 
-# SUPREME run
-print('SUPREME is setting up!')
+# MOGAT run
+print('MOGAT is setting up!')
 from lib import function
 import time, io
 import os, pyreadr, itertools
@@ -74,10 +74,10 @@ if ((True in feature_selection_per_network) or (optional_feat_selection == True)
     import re
 
 # Parser
-parser = argparse.ArgumentParser(description='''An integrative node classification framework, called SUPREME 
-(a subtype prediction methodology), that utilizes graph convolutions on multiple datatype-specific networks that are annotated with multiomics datasets as node features. 
+parser = argparse.ArgumentParser(description='''An integrative node classification framework, called MOGAT 
+(a cancer subtype prediction methodology), that utilizes graph attentions on multiple datatype-specific networks that are annotated with multiomics datasets as node features. 
 This framework is model-agnostic and could be applied to any classification problem with properly processed datatypes and networks.
-In our work, SUPREME was applied specifically to the breast cancer subtype prediction problem by applying convolution on patient similarity networks
+In our work, MOGAT was applied specifically to the breast cancer subtype prediction problem by applying attentions on patient similarity networks
 constructed based on multiple biological datasets from breast tumor samples.''')
 parser.add_argument('-data', "--data_location", nargs = 1, default = ['sample_data'])
 
@@ -95,9 +95,9 @@ device = torch.device('cpu')
 
 
 data_path_node =  base_path + 'data/' + dataset_name +'/'
-run_name = 'SUPREME_'+  dataset_name + '_results_1'
+run_name = 'MOGAT_'+  dataset_name + '_results_1'
 save_path = base_path + run_name + '/'
-excel_file = save_path + "SUPREME_results.xlsx"
+excel_file = save_path + "MOGAT_results.xlsx"
 
 if not os.path.exists(base_path + run_name):
     os.makedirs(base_path + run_name + '/')
@@ -118,7 +118,7 @@ start = time.time()
 
 is_first = 0
 
-print('SUPREME is running..')
+print('MOGAT is running..')
 
 addFeatures = []
 t = range(len(node_networks))
@@ -357,5 +357,5 @@ for trials in range(len(trial_combs)):
 
 end = time.time()
 print('It took ' + str(round(end - start, 1)) + ' seconds for all runs.')
-print('SUPREME is done.')
+print('MOGAT is done.')
 print('Results are available at ' + excel_file)
